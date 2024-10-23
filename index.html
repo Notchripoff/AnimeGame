@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Guesser Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+            transition: transform 0.2s;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease-in;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: calc(100% - 12px);
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #3b5998;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #365e8d;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .credits {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #555;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Anime Guesser!</h1>
+        <img id="animeImage" src="" alt="Anime Character" />
+        <input type="text" id="guess" placeholder="Who is this?" />
+        <button onclick="checkGuess()">Submit Guess</button>
+        <div class="message" id="message"></div>
+        <button onclick="nextCharacter()" style="display:none;" id="nextBtn">Next Character</button>
+        <div class="credits">Made by Namenotfound128</div>
+    </div>
+
+    <script>
+        const characters = [
+            { name: "Naruto", image: "https://static.wikia.nocookie.net/naruto/images/d/d6/Naruto_Part_I.png/revision/latest/scale-to-width-down/300?cb=20210223094656" },
+            { name: "Saitama", image: "https://i.pinimg.com/736x/0d/94/4d/0d944dc6b54ca7c06a5f0b85e0e770a3.jpg" },
+            { name: "Luffy", image: "https://static.wikia.nocookie.net/onepiece/images/6/6d/Monkey_D._Luffy_Anime_Post_Timeskip_Infobox.png/revision/latest?cb=20240306200817" },
+            { name: "Goku", image: "https://static.wikia.nocookie.net/dragonball/images/b/ba/Goku_anime_profile.png/revision/latest?cb=20240723150655" },
+            { name: "Mikasa", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfCHDzEvABlPkazRq1nW8sQF3fPTuNa5C8_w&s" }
+        ];
+
+        let currentCharacter;
+
+        function nextCharacter() {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            currentCharacter = characters[randomIndex];
+            document.getElementById('animeImage').src = currentCharacter.image;
+            document.getElementById('message').innerHTML = '';
+            document.getElementById('guess').value = '';
+            document.getElementById('nextBtn').style.display = 'none';
+        }
+
+        function checkGuess() {
+            const userGuess = document.getElementById('guess').value.trim().toLowerCase();
+            const messageDiv = document.getElementById('message');
+
+            if (userGuess === currentCharacter.name.toLowerCase()) {
+                messageDiv.innerHTML = "You Win!! 🎉";
+                document.getElementById('nextBtn').style.display = 'inline-block';
+            } else {
+                messageDiv.innerHTML = "You Failed! 😢 Try Again.";
+            }
+        }
+
+        // Start the game by loading the first character
+        nextCharacter();
+    </script>
+</body>
+</html>
